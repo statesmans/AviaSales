@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  color: #4a4a4a; }
+
+label {
+  user-select: none; }
+
+.container {
+  max-width: 754px;
+  margin: 0 auto; }
+
+.header-logo {
+  width: max-content;
+  margin: 50px auto; }
+
+.main-block {
+  display: flex;
+  justify-content: space-between; }
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  width: 232px;
+  padding: 20px 0 10px;
+  border-radius: 6px;
+  box-shadow: 0 0 11px -5px #4a4a4a; }
+  .filter__title {
+    padding: 0 0 10px 20px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase; }
+  .filter__item {
+    display: block;
+    padding: 10px 20px;
+    font-weight: 400;
+    font-size: 13px; }
+    .filter__item:hover {
+      background-color: #F1FCFF; }
+    .filter__item input {
+      display: none; }
+    .filter__item label {
+      display: flex;
+      align-items: center;
+      position: relative;
+      cursor: pointer; }
+    .filter__item label:before {
+      content: '';
+      margin-right: 5px;
+      padding: 10px;
+      border: 1px solid #9ABBCE;
+      border-radius: 3px;
+      cursor: pointer; }
+    .filter__item input:checked + label:before {
+      border-color: #2196F3; }
+    .filter__item input:checked + label:after {
+      content: url("../img/Shape.png");
+      display: block;
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      width: 6px;
+      height: 14px; }
+
+.tickets {
+  width: 100%;
+  margin-left: 20px; }
+
+.cost-filter {
+  display: flex;
+  margin-bottom: 20px;
+  border: 1px solid #DFE5EC;
+  border-radius: 3px; }
+  .cost-filter__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 15px 0;
+    font-weight: 600;
+    font-size: 12px; }
+    .cost-filter__button:hover {
+      background-color: #2196F3; }
+      .cost-filter__button:hover .cost-filter__button-text {
+        color: #fff; }
+    .cost-filter__button--active {
+      background-color: #2196F3; }
+      .cost-filter__button--active .cost-filter__button-text {
+        color: #fff; }
+  .cost-filter__button-text {
+    text-transform: uppercase; }
+
+.ticket {
+  padding: 20px 50px 20px 20px;
+  box-shadow: 0 0 11px -5px #4a4a4a; }
+
+.ticket__header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px; }
+
+.ticket__header-price {
+  font-weight: 600;
+  font-size: 24px;
+  color: #2196F3;
+  text-transform: uppercase; }
+
+.flight-forward {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px; }
+  .flight-forward__title {
+    font-weight: 600px;
+    font-size: 12px;
+    color: #A0B0B9;
+    text-transform: uppercase; }
+  .flight-forward__subtitle {
+    font-weight: 600px;
+    font-size: 14px;
+    text-transform: uppercase; }
+
+.flight-back {
+  display: flex;
+  justify-content: space-between; }
+  .flight-back__title {
+    font-weight: 600px;
+    font-size: 12px;
+    color: #A0B0B9;
+    text-transform: uppercase; }
+  .flight-back__subtitle {
+    font-weight: 600px;
+    font-size: 14px;
+    text-transform: uppercase; }
+
+/*# sourceMappingURL=main.css.map */

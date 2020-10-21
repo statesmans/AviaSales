@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header-logo">
+            <img src="img/Logo.png" alt="logo-plane">
+        </header>
+        <main class="main-block">    
+            <aside class="aside-filter filter">
+                <h2 class="filter__title">Количество пересадок</h2>
+    
+    
+                <div class="filter__item">
+                    <input class="filter__item-input" type="checkbox" id="filter-all">
+                    <label for="filter-all">Все</label>
+                </div>
+
+                
+                <div class="filter__item">
+                    <input class="filter__item-input" type="checkbox" id="filter-wOutTransf">
+                    <label for="filter-wOutTransf">Без пересадок</label>
+                </div>
+
+    
+                <div class="filter__item">
+                    <input class="filter__item-input" type="checkbox" id="filter-oneTrans">
+                    <label for="filter-oneTrans">1 пересадка</label>
+                </div>
+
+    
+                <div class="filter__item">
+                    <input class="filter__item-input" type="checkbox" id="filter-twoTrans">
+                    <label for="filter-twoTrans">2 пересадки</label>
+                </div>
+
+
+                <div class="filter__item">
+                    <input class="filter__item-input" type="checkbox" id="filter-thirdTrans">
+                    <label for="filter-thirdTrans">3 пересадки</label>
+                </div>
+            </aside>
+    
+            <section class="tickets">
+
+                <div class="tickets__cost-filter cost-filter">
+                    <div class="cost-filter__button cost-filter__button--active" id="buttonFilterPrice">
+                        <p class="cost-filter__button-text">Самый дешевый</p>
+                    </div>
+                    <div class="cost-filter__button" id="buttonFilterSpeed">
+                        <p class="cost-filter__button-text">Самый быстрый</p>
+                    </div>
+                </div>
+
+
+                <div class="tickets__block" id="tickets-block">
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+
+<script src="main.js"></script> 
+</body>
+</html>
