@@ -65,7 +65,7 @@ label {
       height: 14px; }
 
 .tickets {
-  width: 100%;
+  width: 561px;
   margin-left: 20px; }
 
 .cost-filter {
@@ -93,6 +93,7 @@ label {
     text-transform: uppercase; }
 
 .ticket {
+  margin-bottom: 20px;
   padding: 20px 50px 20px 20px;
   box-shadow: 0 0 11px -5px #4a4a4a; }
 

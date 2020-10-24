@@ -38,7 +38,7 @@ window.addEventListener('load', () => {
             if (e.target.parentNode.classList.contains('filter__item--active')) {
                 e.target.parentNode.classList.remove('filter__item--active')
                 checkClickedTarget(unFilteredTickets)
-            } else {
+            } else { 
                 e.target.parentNode.classList.add('filter__item--active')
                 checkClickedTarget(unFilteredTickets)
             }
