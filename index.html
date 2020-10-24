@@ -13,43 +13,47 @@
             <img src="img/Logo.png" alt="logo-plane">
         </header>
         <main class="main-block">    
-            <aside class="aside-filter filter">
-                <h2 class="filter__title">Количество пересадок</h2>
-    
-    
-                <div class="filter__item">
-                    <input class="filter__item-input" type="checkbox" id="filter-all">
-                    <label for="filter-all">Все</label>
+            <aside class="aside-filter filter" id="filter-block">
+                <div class="filter__heading">
+                    <h2 class="filter__title">Количество пересадок</h2>
                 </div>
-
                 
-                <div class="filter__item">
-                    <input class="filter__item-input" type="checkbox" id="filter-wOutTransf">
-                    <label for="filter-wOutTransf">Без пересадок</label>
-                </div>
-
     
-                <div class="filter__item">
-                    <input class="filter__item-input" type="checkbox" id="filter-oneTrans">
-                    <label for="filter-oneTrans">1 пересадка</label>
-                </div>
-
+                <div class="filter__items" id="filter-items">
+                    <div class="filter__item">
+                        <input class="filter__item-input" type="checkbox" id="filterAll">
+                        <label for="filterAll">Все</label>
+                    </div>
     
-                <div class="filter__item">
-                    <input class="filter__item-input" type="checkbox" id="filter-twoTrans">
-                    <label for="filter-twoTrans">2 пересадки</label>
-                </div>
-
-
-                <div class="filter__item">
-                    <input class="filter__item-input" type="checkbox" id="filter-thirdTrans">
-                    <label for="filter-thirdTrans">3 пересадки</label>
+                    
+                    <div class="filter__item">
+                        <input class="filter__item-input" type="checkbox" id="filterWOutTransf">
+                        <label for="filterWOutTransf">Без пересадок</label>
+                    </div>
+    
+        
+                    <div class="filter__item">
+                        <input class="filter__item-input" type="checkbox" id="filterOneTrans">
+                        <label for="filterOneTrans">1 пересадка</label>
+                    </div>
+    
+        
+                    <div class="filter__item">
+                        <input class="filter__item-input" type="checkbox" id="filterTwoTrans">
+                        <label for="filterTwoTrans">2 пересадки</label>
+                    </div>
+    
+    
+                    <div class="filter__item">
+                        <input class="filter__item-input" type="checkbox" id="filterThreeTrans">
+                        <label for="filterThreeTrans">3 пересадки</label>
+                    </div>
                 </div>
             </aside>
     
             <section class="tickets">
 
-                <div class="tickets__cost-filter cost-filter">
+                <div class="tickets__cost-filter cost-filter" id='filterButtons'>
                     <div class="cost-filter__button cost-filter__button--active" id="buttonFilterPrice">
                         <p class="cost-filter__button-text">Самый дешевый</p>
                     </div>

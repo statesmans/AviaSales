@@ -1,4 +1,5 @@
-let allTickets = ''
+let unFilteredTickets = ''
+let filteredTickets = []
 
 
 
@@ -6,43 +7,165 @@ let allTickets = ''
 // Handlers
 
 window.addEventListener('load', () => {
+    // Add listener for filter button (the cheapest, the fastest)
     let priceButton = document.getElementById('buttonFilterPrice');
     let fastButton = document.getElementById('buttonFilterSpeed');
 
-    window.addEventListener('click', (e) => {
-        // Sort to low-price
-        if((e.target === priceButton) && !priceButton.classList.contains('cost-filter__button--active')) {
-            e.target.classList.add('cost-filter__button--active')
+    priceButton.addEventListener('click', () => {
+        if(!priceButton.classList.contains('cost-filter__button--active')) {
+            priceButton.classList.add('cost-filter__button--active')
             fastButton.classList.remove('cost-filter__button--active')
-            sortTicketPrice(allTickets)
-        } 
-
-        // Sort to some fast ticket
-        if((e.target === fastButton) && !fastButton.classList.contains('cost-filter__button--active')) {
-            e.target.classList.add('cost-filter__button--active')
-            priceButton.classList.remove('cost-filter__button--active')
-            sortTicketFast(allTickets)
+            checkClickedTarget(unFilteredTickets)
         } 
     })
+
+    fastButton.addEventListener('click', () => {
+        if(!fastButton.classList.contains('cost-filter__button--active')) {
+            fastButton.classList.add('cost-filter__button--active')
+            priceButton.classList.remove('cost-filter__button--active')
+            checkClickedTarget(unFilteredTickets)
+        } 
+    })
+
+
+
+    // Add listener for aside filter buttons
+    let filterItems = Array.from( document.getElementById('filter-items').children )
+
+    filterItems.forEach(filterItem => {
+        filterItem.lastElementChild.addEventListener('click', (e) => {
+
+            if (e.target.parentNode.classList.contains('filter__item--active')) {
+                e.target.parentNode.classList.remove('filter__item--active')
+                checkClickedTarget(unFilteredTickets)
+            } else {
+                e.target.parentNode.classList.add('filter__item--active')
+                checkClickedTarget(unFilteredTickets)
+            }
+        })
+    });
+    
+    // Get tickets from base
+    getTickets()
 })
 
 
+function checkClickedTarget(tickets) {
+    // Clean filtered array
+    filteredTickets = []
+
+    // Write tickets obtained from base 
+    unFilteredTickets = tickets
+
+
+    let filterItems = Array.from( document.getElementById('filter-items').children ) 
+    let activesItems = []
+
+    // Check which item was chlicked
+    filterItems.forEach( element => {
+
+        if(element.classList.contains('filter__item--active')) {
+            activesItems.push(element.children[0].id)
+        }
+    })
+  
+    if(activesItems.length === 0) {
+        filterTransfer(activesItems = null)
+    } else {
+        filterTransfer(activesItems)
+    }
+}
+
+
+function filterTransfer(idFilter) {
+    // Copy the origin ticket list and work only with copy
+    let copyTickets = unFilteredTickets.slice()
+
+
+    if(idFilter) {
+
+        idFilter.forEach(id => {
+            
+            if(id === 'filterWOutTransf') {
+                copyTickets.forEach(element => {
+                    if(element.segments[0].stops.length === 0) {
+                        filteredTickets.push(element)
+                    }
+                })
+            }
+        
+            if(id === 'filterOneTrans') {
+                copyTickets.forEach(element => {
+                    if(element.segments[0].stops.length === 1) {
+                        filteredTickets.push(element)
+                    }
+                })
+            }
+        
+            if(id === 'filterTwoTrans') {
+                copyTickets.forEach(element => {
+                    if(element.segments[0].stops.length === 2) {
+                        filteredTickets.push(element)
+                    }
+                })
+            }
+        
+            if(id === 'filterThreeTrans') {
+                copyTickets.forEach(element => {
+                    if(element.segments[0].stops.length === 3) {
+                        filteredTickets.push(element)
+                    }
+                })
+            }
+
+            if(id === 'filterAll') {
+                filteredTickets = copyTickets
+            }
+        })
+    }
+
+    let buttonPrice = document.getElementById('buttonFilterPrice');
+
+    if(buttonPrice.classList.contains('cost-filter__button--active') && filteredTickets.length !== 0) {
+
+        sortTicketPrice(filteredTickets)
+    } else if(filteredTickets.length !== 0){
+        sortTicketSpeed(filteredTickets)
+    }
+
+    if(buttonPrice.classList.contains('cost-filter__button--active') && filteredTickets.length == 0) {
+        sortTicketPrice(unFilteredTickets) 
+    } else if(filteredTickets.length == 0){
+        sortTicketSpeed(unFilteredTickets)
+    }
+}
 
 
 function sortTicketPrice(tickets) {
-    
     tickets.sort((a, b) => a.price - b.price)
-    console.log(tickets)
-    allTickets = tickets;
+    delPrevTickets()
     renderTicket(tickets)
 }
 
-function sortTicketFast(tickets) {
+function sortTicketSpeed(tickets) {
     tickets.sort((a, b) => a.segments[0].duration - b.segments[0].duration)
-    console.log(tickets)
-    allTickets = tickets;
+    delPrevTickets()
     renderTicket(tickets)
 }
+
+// Delete prev tickets
+function delPrevTickets() {
+    let ticketsBlock = document.getElementById('tickets-block')
+    let tickets = Array.from(document.getElementsByClassName('ticket'));
+
+
+    tickets.forEach(element => {
+        ticketsBlock.removeChild(element)
+    })
+
+}
+
+
 
 function tranformDate(tickets, index) {
     let departureTime = new Date(tickets.segments[index].date);
@@ -51,24 +174,22 @@ function tranformDate(tickets, index) {
     let departureHours = '';
     let departureMinutes = '';
 
-
-
-    // Получаем время отправки
-    if(departureTime.getUTCHours().toString().length === 1) {
+    // Get time start fly
+    if(departureTime.getUTCHours().length === 1) {
         departureHours = "0" + departureTime.getUTCHours()
     } else {
         departureHours = departureTime.getUTCHours()
     }
  
-    if(departureTime.getUTCMinutes().toString().length === 1) {
+    if(departureTime.getUTCMinutes().length === 1) {
         departureMinutes = "0" + departureTime.getUTCMinutes()
     } else {
         departureMinutes = departureTime.getUTCMinutes()
     }
 
+    // Get time fly over
     let endHours = Math.floor(tickets.segments[index].duration / 60) + departureTime.getUTCHours();
     let endMinutes = tickets.segments[index].duration % 60 + departureTime.getUTCMinutes();
-
 
 
     if(endMinutes >= 60) {
@@ -87,7 +208,6 @@ function tranformDate(tickets, index) {
     }
 
     if(endHours >= 24 ) {
-
         endHours = (endHours - (Math.floor(endHours / 24) * 24))
 
         if(endHours <= 9) {
@@ -113,24 +233,14 @@ function renderTransferTime(tickets, index) {
 
 
 function renderTicket(tickets) {
-    let ticketBox = document.getElementById('tickets-block');
-
-
+    console.log(tickets)
     for(i = 0; i < 5; i++) {
-        // Превращаем цену нужный вид
+        // Convert price 
         let ticketPrice = (tickets[i].price).toString()
         let convertPrice = (ticketPrice.slice(0,2) + " " + ticketPrice.slice(2)).toString()
     
-        // Превращаем время в нужный формат
-        
-        let newDate = ';'
 
-        // Lenght of stops 
-        if(tickets[i].segments[0]) {
-
-        }
-        
-    
+        // Convert ending
         let nameStops = '';
     
         if(tickets[i].segments[0].stops.length === 1) {
@@ -141,8 +251,8 @@ function renderTicket(tickets) {
             nameStops = "пересадки"
         }
 
-    
-        let ticketCode = `<div class="tickets__block-ticket ticket">
+        // Structure of ticket
+        let ticketCode = `
                             <div class="ticket__header">
                                 <p class="ticket__header-price">${convertPrice} P</p>
                                 <img src="img/S7 Logo.png" alt="Airline logo">
@@ -173,12 +283,19 @@ function renderTicket(tickets) {
                                     <div class="flight-back__subtitle">${(tickets[i].segments[1].stops).join(', ')}</div>
                                 </div>
                             </div>
-                        </div>`
+                        `
     
-          
-        ticketBox.appendChild(document.createElement('div'))
-        .innerHTML = ticketCode
-}
+        // Add ticket in ticketBox and we get it in 'currentTicket'
+        let ticketBox = document.getElementById('tickets-block');
+        ticketBox.appendChild(document.createElement('div')).classList.add('tickets__block-ticket', 'ticket')
+
+        // Add id to current ticket
+        let currentTicket = ticketBox.getElementsByClassName('ticket')[i]
+        currentTicket.id = `ticket - ${i}`
+
+        // Inner ticket
+        currentTicket.innerHTML = ticketCode
+    }
 }
 
 
@@ -189,20 +306,28 @@ function renderTicket(tickets) {
 
 
 async function getTickets() {
-    let urlTicket = `https://front-test.beta.aviasales.ru/tickets?searchId=`
 
     fetch('https://front-test.beta.aviasales.ru/search')
         .then(responce => responce.json()) 
         .then(data => {
             fetch(`https://front-test.beta.aviasales.ru/tickets?searchId=${data.searchId}`)
-                .then(responce => responce.json())
-                .then(data => {
-                    new sortTicketPrice(data.tickets)
+                .then(responce => {
+                    if(responce.ok) {
+                        return responce.json()
+                    } else {
+                        throw new Error('Server down')
+                    }
                 })
-        })     
+                .then(data => {
+                    checkClickedTarget(data.tickets)
+                })
+                .catch(e => {
+                    console.log('Error:' + e)
+                    getTickets()
+                })
+                
+    })
+             
 }
 
 
-window.addEventListener('load', () => {
-    getTickets()
-})
