@@ -34,14 +34,26 @@ window.addEventListener('load', () => {
 
     filterItems.forEach(filterItem => {
         filterItem.lastElementChild.addEventListener('click', (e) => {
+            let filterItems = Array.from( document.getElementById('filter-items').children ) 
 
             if (e.target.parentNode.classList.contains('filter__item--active')) {
+
                 e.target.parentNode.classList.remove('filter__item--active')
+                filterItems[0].classList.remove('filter__item--active')
                 checkClickedTarget(unFilteredTickets)
-            } else { 
+
+            } else if(!e.target.parentNode.classList.contains('filter__item--active') && e.target.parentNode.children[0].id === "filterAll"){ 
+                
+                filterItems.forEach( element => {
+                    element.classList.add('filter__item--active')
+                })
+                checkClickedTarget(unFilteredTickets)
+           
+            } else {
                 e.target.parentNode.classList.add('filter__item--active')
                 checkClickedTarget(unFilteredTickets)
             }
+
         })
     });
     
@@ -63,10 +75,10 @@ function checkClickedTarget(tickets) {
 
     // Check which item was chlicked
     filterItems.forEach( element => {
-
         if(element.classList.contains('filter__item--active')) {
             activesItems.push(element.children[0].id)
         }
+
     })
   
     if(activesItems.length === 0) {
@@ -241,14 +253,24 @@ function renderTicket(tickets) {
     
 
         // Convert ending
-        let nameStops = '';
+        let nameStopsForward = '';
     
         if(tickets[i].segments[0].stops.length === 1) {
-            nameStops = "пересадкa"
+            nameStopsForward = "пересадкa"
         } else if(tickets[i].segments[0].stops.length === 0){
-            nameStops = "пересадок"
+            nameStopsForward = "пересадок"
         } else {
-            nameStops = "пересадки"
+            nameStopsForward = "пересадки"
+        }
+
+        let nameStopsBack = '';
+    
+        if(tickets[i].segments[1].stops.length === 1) {
+            nameStopsBack = "пересадкa"
+        } else if(tickets[i].segments[1].stops.length === 0){
+            nameStopsBack = "пересадок"
+        } else {
+            nameStopsBack = "пересадки"
         }
 
         // Structure of ticket
@@ -258,28 +280,28 @@ function renderTicket(tickets) {
                                 <img src="img/S7 Logo.png" alt="Airline logo">
                             </div>
                             <div class="ticket__flight-forward flight-forward">
-                                <div class="flight-forward__schedule ">
+                                <div class="flight-forward__schedule flight-forward__item">
                                     <h3 class="flight-forward__title">${tickets[i].segments[0].origin} – ${tickets[i].segments[0].destination}</h3>
                                     <div class="flight-forward__subtitle">${tranformDate(tickets[i], 0)}</div></div> 
-                                <div class="flight-forward__flight-time">
+                                <div class="flight-forward__flight-time flight-forward__item">
                                     <h3 class="flight-forward__title">В пути</h3>
                                     <div class="flight-forward__subtitle">${renderTransferTime(tickets[i], 0)}</div></div>
-                                <div class="flight-forward__transfer ">
-                                    <h3 class="flight-forward__title">${(tickets[i].segments[0].stops).length} ${nameStops}</h3>
+                                <div class="flight-forward__transfer flight-forward__item ">
+                                    <h3 class="flight-forward__title">${(tickets[i].segments[0].stops).length} ${nameStopsForward}</h3>
                                     <div class="flight-forward__subtitle">${(tickets[i].segments[0].stops).join(', ')}</div></div>
                             </div>
 
                             <div class="ticket__flight-back flight-back">
-                                <div class="flight-back__schedule ">
+                                <div class="flight-back__schedule flight-forward__item">
                                     <h3 class="flight-back__title">${tickets[i].segments[1].origin} – ${tickets[i].segments[1].destination}</h3>
                                     <div class="flight-back__subtitle">${tranformDate(tickets[i], 1)}</div>
                                 </div>
-                                <div class="flight-back__flight-time">
+                                <div class="flight-back__flight-time flight-forward__item">
                                     <h3 class="flight-back__title">В пути</h3>
                                     <div class="flight-back__subtitle">${renderTransferTime(tickets[i], 1)}</div>
                                 </div>
-                                <div class="flight-back__transfer">
-                                    <h3 class="flight-back__title">${(tickets[i].segments[1].stops).length} ${nameStops}</h3>
+                                <div class="flight-back__transfer flight-forward__item">
+                                    <h3 class="flight-back__title">${(tickets[i].segments[1].stops).length} ${nameStopsBack}</h3>
                                     <div class="flight-back__subtitle">${(tickets[i].segments[1].stops).join(', ')}</div>
                                 </div>
                             </div>

@@ -64,18 +64,20 @@ label {
             border-radius: 3px;
             cursor: pointer;
         }
-        & input:checked + label:before {
-            border-color: #2196F3;
-        }
-        & input:checked + label:after {
-            content: url('../img/Shape.png');
-            display: block;
-            position: absolute;
-            top: 2px;
-            left: 5px;
-            width: 6px;
-            height: 14px;
-            
+        &--active {
+             input + label:before {
+                border-color: #2196F3;
+            }
+             input + label:after {
+                content: url('../img/Shape.png');
+                display: block;
+                position: absolute;
+                top: 2px;
+                left: 5px;
+                width: 6px;
+                height: 14px;
+                
+            }
         }
 
     }
@@ -140,7 +142,6 @@ label {
 
 .flight-forward {
     display: flex;
-    justify-content: space-between;
     padding-bottom: 10px;
     &__title {
         font-weight: 600px;
@@ -153,12 +154,21 @@ label {
         font-size: 14px;
         text-transform: uppercase;
     }
+    &__item {
+        width: 33.333333%;
+        &:nth-child(2) {
+            text-align: center;
+        }
+        &:nth-child(3) {
+            text-align: end;
+        }
+    }
 }
   
 .flight-back {
     display: flex;
     justify-content: space-between;
-
+   
     &__title {
         font-weight: 600px;
         font-size: 12px;

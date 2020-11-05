@@ -53,9 +53,9 @@ label {
       border: 1px solid #9ABBCE;
       border-radius: 3px;
       cursor: pointer; }
-    .filter__item input:checked + label:before {
+    .filter__item--active input + label:before {
       border-color: #2196F3; }
-    .filter__item input:checked + label:after {
+    .filter__item--active input + label:after {
       content: url("../img/Shape.png");
       display: block;
       position: absolute;
@@ -110,7 +110,6 @@ label {
 
 .flight-forward {
   display: flex;
-  justify-content: space-between;
   padding-bottom: 10px; }
   .flight-forward__title {
     font-weight: 600px;
@@ -121,6 +120,12 @@ label {
     font-weight: 600px;
     font-size: 14px;
     text-transform: uppercase; }
+  .flight-forward__item {
+    width: 33.333333%; }
+    .flight-forward__item:nth-child(2) {
+      text-align: center; }
+    .flight-forward__item:nth-child(3) {
+      text-align: end; }
 
 .flight-back {
   display: flex;
